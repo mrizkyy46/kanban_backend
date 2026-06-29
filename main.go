@@ -1,21 +1,23 @@
 package main
 
 import (
-	"net/http"
+	"log"
 
-	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 	"github.com/mrizkyy46/kanban-backend/config"
+	"github.com/mrizkyy46/kanban-backend/routes"
 )
 
 func main() {
-	config.ConnectDatabase()
-	r := gin.Default()
+	err := godotenv.Load()
 
-	r.GET("/ping", func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, gin.H{
-			"message": "Backend terkoneksi dengan database dan siap digunakan!",
-		})
-	})
+	if err != nil {
+		log.Fatal("Gagal memuat file .env")
+	}
+
+	config.ConnectDatabase()
+
+	r := routes.SetupRouter()
 
 	r.Run("127.0.0.1:8080")
 }
