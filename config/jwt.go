@@ -9,7 +9,7 @@ import (
 )
 
 func GenerateToken(userID uuid.UUID) (string, error) {
-	secretKey := os.Getenv("JWT_SECRET_KEY")
+	secretKey := []byte(os.Getenv("JWT_SECRET_KEY"))
 
 	claims := jwt.MapClaims{
 		"user_id": userID.String(),
