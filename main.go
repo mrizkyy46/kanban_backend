@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"os"
 
 	"github.com/joho/godotenv"
 	"github.com/mrizkyy46/kanban-backend/config"
@@ -19,5 +20,5 @@ func main() {
 
 	r := routes.SetupRouter()
 
-	r.Run("127.0.0.1:8080")
+	r.Run(os.Getenv("APP_HOST"))
 }

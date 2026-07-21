@@ -16,7 +16,7 @@ type RegisterInput struct {
 }
 
 type LoginInput struct {
-	Email    string `json:"username" binding:"required,email"`
+	Email    string `json:"email" binding:"required,email"`
 	Password string `json:"password" binding:"required"`
 }
 
@@ -74,7 +74,7 @@ func Login(c *gin.Context) {
 	}
 
 	var user models.User
-	if err := config.DB.Where("email = ?", input.Email).First(&user); err != nil {
+	if err := config.DB.Where("email = ?", input.Email).First(&user).Error; err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{
 			"status": http.StatusUnauthorized,
 			"error":  "Email atau Password salah",
